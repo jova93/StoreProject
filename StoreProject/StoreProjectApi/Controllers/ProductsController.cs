@@ -14,11 +14,11 @@ public class ProductsController : ControllerBase
         _productsService = productsService;
 
     [HttpGet]
-    public async Task<List<Product>> Get() =>
+    public async Task<List<Product>> GetAsync() =>
         await _productsService.GetAsync();
 
     [HttpGet("{id:length(24)}")]
-    public async Task<ActionResult<Product>> Get(string id)
+    public async Task<ActionResult<Product>> GetAsync(string id)
     {
         var product = await _productsService.GetAsync(id);
 
@@ -29,4 +29,30 @@ public class ProductsController : ControllerBase
 
         return product;
     }
+
+    //[HttpGet("{artnr:length(3)}")]
+    //public async Task<ActionResult<Product>> GetAsync(string artnr)
+    //{
+    //    var product = await _productsService.GetAsync(artnr);
+
+    //    if (product is null)
+    //    {
+    //        return NotFound();
+    //    }
+
+    //    return product;
+    //}
+
+    //[HttpGet("article-number/{articleNumber}")]
+    //public async Task<ActionResult<Product>> GetByArticleNumberAsync(string articleNumber)
+    //{
+    //    var product = await _productsService.GetByArticleNumberAsync(articleNumber);
+
+    //    if (product is null)
+    //    {
+    //        return NotFound();
+    //    }
+
+    //    return product;
+    //}
 }

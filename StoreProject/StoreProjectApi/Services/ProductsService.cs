@@ -26,4 +26,7 @@ public class ProductsService
 
     public async Task<Product?> GetAsync(string id) =>
         await _productsCollection.Find(p => p.Id == id).FirstOrDefaultAsync();
+
+    //public async Task<Product?> GetAsync(string articleNumber) =>
+    //    await _productsCollection.Find(p => p.ArticleNumber == articleNumber).FirstOrDefaultAsync();
 }
