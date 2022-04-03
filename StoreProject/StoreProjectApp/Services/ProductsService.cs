@@ -39,4 +39,12 @@ public class ProductsService
 
         return responseBody.IsSuccessStatusCode;
     }
+
+    public async Task<bool> RemoveAsync(string id)
+    {
+        var uri = $"https://localhost:7213/api/products/{id}";
+        var responseBody = await _httpClient.DeleteAsync(uri);
+
+        return responseBody.IsSuccessStatusCode;
+    }
 }

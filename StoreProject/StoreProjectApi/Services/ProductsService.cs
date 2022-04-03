@@ -29,4 +29,7 @@ public class ProductsService
 
     public async Task CreateAsync(Product newProduct) =>
         await _productsCollection.InsertOneAsync(newProduct);
+
+    public async Task RemoveAsync(string id) =>
+        await _productsCollection.DeleteOneAsync(p => p.Id == id);
 }

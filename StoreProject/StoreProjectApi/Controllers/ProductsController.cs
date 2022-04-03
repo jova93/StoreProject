@@ -37,4 +37,19 @@ public class ProductsController : ControllerBase
 
         return CreatedAtAction(nameof(GetAsync), new { id = newProduct.Id }, newProduct);
     }
+
+    [HttpDelete("{id:length(24)}")]
+    public async Task<IActionResult> DeleteAsync(string id)
+    {
+        var product = await _productsService.GetAsync(id);
+
+        if (product is null)
+        {
+            return NotFound();
+        }
+
+        await _productsService.RemoveAsync(id);
+
+        return NoContent();
+    }
 }

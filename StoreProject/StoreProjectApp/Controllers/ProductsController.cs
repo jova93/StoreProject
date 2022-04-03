@@ -21,24 +21,6 @@ public class ProductsController : Controller
         return View(products);
     }
 
-    // GET: Products/Details/003
-    //public async Task<IActionResult> Details(string? artnr)
-    //{
-    //    if (artnr == null)
-    //    {
-    //        return NotFound();
-    //    }
-
-    //    var product = await _productsService.GetAsync(artnr);
-
-    //    if (product == null)
-    //    {
-    //        return NotFound();
-    //    }
-
-    //    return View(product);
-    //}
-
     // GET: Products/Details/Id
     public async Task<IActionResult> Details(string? id)
     {
@@ -75,5 +57,32 @@ public class ProductsController : Controller
         }
         
         return View(newProduct);
+    }
+
+    // GET: Products/Delete/Id
+    public async Task<IActionResult> Delete(string? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var product = await _productsService.GetAsync(id);
+
+        if (product == null)
+        {
+            return NotFound();
+        }
+
+        return View(product);
+    }
+
+    // POST: Products/Delete/Id
+    [HttpPost, ActionName("Delete")]
+    public async Task<IActionResult> DeleteConfirmed(string id)
+    {
+        var result = await _productsService.RemoveAsync(id);
+
+        return RedirectToAction(nameof(Index));
     }
 }
