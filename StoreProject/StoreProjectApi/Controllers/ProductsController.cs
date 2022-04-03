@@ -30,29 +30,11 @@ public class ProductsController : ControllerBase
         return product;
     }
 
-    //[HttpGet("{artnr:length(3)}")]
-    //public async Task<ActionResult<Product>> GetAsync(string artnr)
-    //{
-    //    var product = await _productsService.GetAsync(artnr);
+    [HttpPost]
+    public async Task<IActionResult> PostAsync(Product newProduct)
+    {
+        await _productsService.CreateAsync(newProduct);
 
-    //    if (product is null)
-    //    {
-    //        return NotFound();
-    //    }
-
-    //    return product;
-    //}
-
-    //[HttpGet("article-number/{articleNumber}")]
-    //public async Task<ActionResult<Product>> GetByArticleNumberAsync(string articleNumber)
-    //{
-    //    var product = await _productsService.GetByArticleNumberAsync(articleNumber);
-
-    //    if (product is null)
-    //    {
-    //        return NotFound();
-    //    }
-
-    //    return product;
-    //}
+        return CreatedAtAction(nameof(GetAsync), new { id = newProduct.Id }, newProduct);
+    }
 }

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StoreProjectApp.Services;
+using StoreProjectApp.ViewModels;
+using StoreProjectApp.Models;
 
 namespace StoreProjectApp.Controllers;
 
@@ -53,5 +55,25 @@ public class ProductsController : Controller
         }
 
         return View(product);
+    }
+
+    // GET: Products/Create
+    public ActionResult Create()
+    {
+        return View();
+    }
+
+    // POST: Products/Create
+    [HttpPost]
+    public async Task<IActionResult> Create(CreateProduct newProduct)
+    {
+        if (ModelState.IsValid)
+        {
+            var result = await _productsService.PostAsync(newProduct);
+
+            return RedirectToAction(nameof(Index));
+        }
+        
+        return View(newProduct);
     }
 }

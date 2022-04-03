@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using Newtonsoft.Json;
-
 using StoreProjectApp.Models;
+using StoreProjectApp.ViewModels;
 
 namespace StoreProjectApp.Services;
 
@@ -12,14 +12,12 @@ public class ProductsService
     public ProductsService()
     {
         _httpClient = new HttpClient();
-
-        //_httpClient = httpClient;
     }
 
     public async Task<List<Product>?> GetAsync()
     {
-        string responseBody = await _httpClient.GetStringAsync("https://localhost:7213/api/products");
-        
+        var uri = $"https://localhost:7213/api/products";
+        var responseBody = await _httpClient.GetStringAsync(uri);
         var products = JsonConvert.DeserializeObject<List<Product>>(responseBody);
 
         return products;
@@ -32,5 +30,13 @@ public class ProductsService
         var product = JsonConvert.DeserializeObject<Product>(responseBody);
 
         return product;
+    }
+
+    public async Task<bool> PostAsync(CreateProduct newProduct)
+    {
+        var uri = $"https://localhost:7213/api/products";
+        var responseBody = await _httpClient.PostAsJsonAsync(uri, newProduct);
+
+        return responseBody.IsSuccessStatusCode;
     }
 }
