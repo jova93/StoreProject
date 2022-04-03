@@ -30,6 +30,9 @@ public class ProductsService
     public async Task CreateAsync(Product newProduct) =>
         await _productsCollection.InsertOneAsync(newProduct);
 
+    public async Task UpdateAsync(string id, Product updatedProduct) =>
+        await _productsCollection.ReplaceOneAsync(p => p.Id == id, updatedProduct);
+
     public async Task RemoveAsync(string id) =>
         await _productsCollection.DeleteOneAsync(p => p.Id == id);
 }

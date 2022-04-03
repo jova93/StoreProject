@@ -59,6 +59,46 @@ public class ProductsController : Controller
         return View(newProduct);
     }
 
+    // GET: Products/Edit/Id
+    public async Task<IActionResult> Edit(string? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var product = await _productsService.GetAsync(id);
+
+        if (product == null)
+        {
+            return NotFound();
+        }
+
+        return View(product);
+    }
+
+    // POST: Products/Edit/Id
+    [HttpPost]
+    public async Task<IActionResult> Edit(string id, Product product)
+    {
+        EditProduct updatedProduct = new()
+        {
+            ArticleNumber = product.ArticleNumber,
+            Name = product.Name,
+            Description = product.Description,
+            Price = product.Price
+        };
+
+        if (ModelState.IsValid)
+        {
+            var result = await _productsService.UpdateAsync(id, updatedProduct);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        return View(product);
+    }
+
     // GET: Products/Delete/Id
     public async Task<IActionResult> Delete(string? id)
     {

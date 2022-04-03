@@ -40,6 +40,14 @@ public class ProductsService
         return responseBody.IsSuccessStatusCode;
     }
 
+    public async Task<bool> UpdateAsync(string id, EditProduct updatedProduct)
+    {
+        var uri = $"https://localhost:7213/api/products/{id}";
+        var responseBody = await _httpClient.PutAsJsonAsync(uri, updatedProduct);
+
+        return responseBody.IsSuccessStatusCode;
+    }
+
     public async Task<bool> RemoveAsync(string id)
     {
         var uri = $"https://localhost:7213/api/products/{id}";

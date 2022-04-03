@@ -38,6 +38,23 @@ public class ProductsController : ControllerBase
         return CreatedAtAction(nameof(GetAsync), new { id = newProduct.Id }, newProduct);
     }
 
+    [HttpPut("{id:length(24)}")]
+    public async Task<IActionResult> Update(string id, Product updatedProduct)
+    {
+        var product = await _productsService.GetAsync(id);
+
+        if (product is null)
+        {
+            return NotFound();
+        }
+
+        updatedProduct.Id = product.Id;
+
+        await _productsService.UpdateAsync(id, updatedProduct);
+
+        return NoContent();
+    }
+
     [HttpDelete("{id:length(24)}")]
     public async Task<IActionResult> DeleteAsync(string id)
     {
